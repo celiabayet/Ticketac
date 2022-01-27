@@ -16,36 +16,16 @@ router.get('/homepage', function (req, res, next) {
   res.render('homepage', { title: 'Express' });
 });
 
+router.post('/tickets_available', async function (req, res, next) {
+  var departure = req.body.departure;
+  var arrival = req.body.arrival;
+  console.log(req.body.date);
+  var date = new Date(req.body.date).toUTCString();
 
-// Remplissage de la base de donnée, une fois suffit
-router.get('/save', async function (req, res, next) {
+  var journeysAvailable = await journeyModel.find({departure : departure, arrival: arrival, date: date});
 
-  // How many journeys we want
-  var count = 300
-
-  // Save  ---------------------------------------------------
-  for (var i = 0; i < count; i++) {
-
-    departureCity = city[Math.floor(Math.random() * Math.floor(city.length))]
-    arrivalCity = city[Math.floor(Math.random() * Math.floor(city.length))]
-
-    if (departureCity != arrivalCity) {
-
-      var newUser = new journeyModel({
-        departure: departureCity,
-        arrival: arrivalCity,
-        date: date[Math.floor(Math.random() * Math.floor(date.length))],
-        departureTime: Math.floor(Math.random() * Math.floor(23)) + ":00",
-        price: Math.floor(Math.random() * Math.floor(125)) + 25,
-      });
-
-      await newUser.save();
-
-    }
-
-  }
-  res.render('index', { title: 'Express' });
-});
+  res.render('tickets_available', {journeysAvailable})
+})
 
 
 // Cette route est juste une verification du Save.
