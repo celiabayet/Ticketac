@@ -11,18 +11,22 @@ a {
   color: #00B7FF;
 }
 
-<<<<<<< HEAD
 .navbar a.active {
-  color: #DA3848;
+  color: #d83a4c;;
 }
-=======
-.container {
+
+
+.container-romain {
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
   color:white;
   text-shadow: 1px 1px 1px black;
+}
+
+.container {
+  height: 100%;
 }
 
 .main-row {
@@ -38,4 +42,12 @@ a {
 .btn-info {
   background: #d83a4c;
 }
->>>>>>> e715d238c9b0337faee36e2a31503644e9b7e17e
+
+.title-home {
+  color: white;
+}
+
+#landmark {
+  height: 200px;
+  width: 200px;
+}
