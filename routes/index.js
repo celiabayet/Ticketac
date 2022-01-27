@@ -35,7 +35,9 @@ router.get('/mytickets', function (req, res, next) {
 
   var alreadyExist = false;
   for (var i = 0; i < req.session.mytickets.length; i++) {
-    if (req.session.mytickets[i].date == req.query.date && req.session.mytickets[i].departure == req.query.departure && req.session.mytickets[i].arrival == req.query.arrival) {
+    if (req.session.mytickets[i].date == req.query.date 
+      && req.session.mytickets[i].departure == req.query.departure 
+      && req.session.mytickets[i].arrival == req.query.arrival) {
       alreadyExist = true;
     }
   }
@@ -46,7 +48,8 @@ router.get('/mytickets', function (req, res, next) {
       arrival: req.query.arrival,
       date: req.query.date,
       departureTime: req.query.departureTime,
-      price: req.query.price
+      price: req.query.price,
+      id: req.query.id
     })
   }
 
@@ -73,6 +76,8 @@ router.get('/delete-ticket', function (req, res, next) {
   res.render('mytickets', { mytickets: req.session.mytickets, totalPrice })
 })
 
+
+// Stripe
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51KHl6lGSUGrIkzadDuDUf4E8C8bAPElR90tqYxseeWi9BeBP8AhlubaIHpCi04Jhw8f2Ohyi8G24d1oXUDsSrmpv00ucFAALMp');
 
@@ -107,7 +112,17 @@ router.post('/create-checkout-session', async (req, res) => {
   res.redirect(303, session.url);
 });
 
-router.get('/success', (req, res) => {
+//Success
+router.get('/success', async function(req, res, next) {
+  for (let i=0; i<req.session.mytickets; i++){
+    await journeyModel.updateOne(
+      { _id: req.session.mytickets[i].id },
+      { $push: { users: req.session.user.id } }
+     );
+  };
+
+  req.session.mytickets = [];
+
   res.render('success');
 });
 
@@ -115,19 +130,12 @@ router.get('/cancel', (req, res) => {
   res.redirect('mytickets');
 });
 
-// Cette route est juste une verification du Save.
-// Vous pouvez choisir de la garder ou la supprimer.
-router.get('/result', function (req, res, next) {
-  // Permet de savoir combien de trajets il y a par ville en base
-  for (i = 0; i < city.length; i++) {
-    journeyModel.find(
-      { departure: city[i] }, //filtre
-      function (err, journey) {
-        console.log(`Nombre de trajets au départ de ${journey[0].departure} : `, journey.length);
-      }
-    )
-  }
-  res.render('index', { title: 'Express' });
+router.get('/last_trips', async function(req, res, next) {
+  var trips = await journeyModel.find({user : req.session.user.id});
+  console.log(trips)
+
+  res.render('last_trips', {trips});
 });
+
 
 module.exports = router;
