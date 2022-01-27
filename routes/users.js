@@ -27,7 +27,6 @@ router.post('/sign-up', async function (req, res, next) {
       id: newUserSave._id,
     }
 
-    console.log(req.session.user)
     res.redirect('/homepage')
   } else {
     res.redirect('/')

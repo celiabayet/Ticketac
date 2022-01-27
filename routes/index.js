@@ -10,7 +10,7 @@ router.get('/', async function (req, res, next) {
 });
 
 router.get('/homepage', function (req, res, next) {
-  res.render('homepage', { title: 'Express' });
+  res.render('homepage');
 });
 
 router.post('/tickets_available', async function (req, res, next) {
@@ -25,6 +25,7 @@ router.post('/tickets_available', async function (req, res, next) {
 })
 
 router.get('/homepage', function (req, res, next) {
+  console.log(req.session.user);
   res.render('homepage');
 });
 
@@ -35,8 +36,8 @@ router.get('/mytickets', function (req, res, next) {
 
   var alreadyExist = false;
   for (var i = 0; i < req.session.mytickets.length; i++) {
-    if (req.session.mytickets[i].date == req.query.date 
-      && req.session.mytickets[i].departure == req.query.departure 
+    if (req.session.mytickets[i].date == req.query.date
+      && req.session.mytickets[i].departure == req.query.departure
       && req.session.mytickets[i].arrival == req.query.arrival) {
       alreadyExist = true;
     }
@@ -79,6 +80,7 @@ router.get('/delete-ticket', function (req, res, next) {
 
 // Stripe
 const Stripe = require('stripe');
+const userModel = require('../models/users');
 const stripe = Stripe('sk_test_51KHl6lGSUGrIkzadDuDUf4E8C8bAPElR90tqYxseeWi9BeBP8AhlubaIHpCi04Jhw8f2Ohyi8G24d1oXUDsSrmpv00ucFAALMp');
 
 router.post('/create-checkout-session', async (req, res) => {
@@ -113,12 +115,14 @@ router.post('/create-checkout-session', async (req, res) => {
 });
 
 //Success
-router.get('/success', async function(req, res, next) {
-  for (let i=0; i<req.session.mytickets; i++){
-    await journeyModel.updateOne(
-      { _id: req.session.mytickets[i].id },
-      { $push: { users: req.session.user.id } }
-     );
+router.get('/success', async function (req, res, next) {
+  console.log(req.session.mytickets);
+  console.log(req.session.user);
+  for (let i = 0; i < req.session.mytickets; i++) {
+    await userModel.updateOne(
+      { _id: req.session.user.id },
+      { $push: { journeys: req.session.mytickets[i].id } }
+    );
   };
 
   req.session.mytickets = [];
@@ -130,11 +134,12 @@ router.get('/cancel', (req, res) => {
   res.redirect('mytickets');
 });
 
-router.get('/last_trips', async function(req, res, next) {
-  var trips = await journeyModel.find({user : req.session.user.id});
-  console.log(trips)
+router.get('/last_trips', async function (req, res, next) {
+  console.log(req.session.user);
+  var user = await userModel.find({ user: req.session.user._id }).populate('journeys');
+  console.log(user);
 
-  res.render('last_trips', {trips});
+  res.render('last_trips', { trips });
 });
 
 
