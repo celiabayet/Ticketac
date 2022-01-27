@@ -5,8 +5,7 @@ var journeySchema = mongoose.Schema({
     arrival: String,
     date: Date,
     departureTime: String,
-    price: Number,
-    users: [{type: mongoose.Schema.Types.ObjectId, ref: 'users'}]
+    price: Number
 });
 
 var journeyModel = mongoose.model('journeys', journeySchema);

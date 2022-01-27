@@ -21,7 +21,7 @@ router.post('/tickets_available', async function (req, res, next) {
 
   var journeysAvailable = await journeyModel.find({ departure: departure, arrival: arrival, date: date });
 
-  res.render('tickets_available', { journeysAvailable, date })
+  res.render('tickets_available', { journeysAvailable })
 })
 
 router.get('/homepage', function (req, res, next) {
@@ -53,27 +53,14 @@ router.get('/mytickets', function (req, res, next) {
     })
   }
 
-  let totalPrice = 0;
-  for (let i = 0; i < req.session.mytickets.length; i++) {
-    totalPrice += req.session.mytickets[i].price;
-  }
-
-  totalPrice = parseInt(totalPrice);
-
-  res.render('mytickets', { mytickets: req.session.mytickets, totalPrice });
+  res.render('mytickets', { mytickets: req.session.mytickets });
 })
 
 router.get('/delete-ticket', function (req, res, next) {
 
-  req.session.mytickets.splice(req.query.position, 1);
-  let totalPrice = 0;
-  for (let i = 0; i < req.session.mytickets.length; i++) {
-    totalPrice += req.session.mytickets[i].price;
-  }
+  req.session.mytickets.splice(req.query.position, 1)
 
-  totalPrice = parseInt(totalPrice);
-
-  res.render('mytickets', { mytickets: req.session.mytickets, totalPrice })
+  res.render('mytickets', { mytickets: req.session.mytickets })
 })
 
 

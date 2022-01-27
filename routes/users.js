@@ -49,6 +49,7 @@ router.post('/sign-in', async function (req, res, next) {
   } else {
     res.render('/')
   }
+  console.log(req.session.user)
 });
 
 router.get('/logout', function (req, res, next) {
