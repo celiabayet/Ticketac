@@ -16,7 +16,7 @@
 
 <body>
 
-    <%- include('navbar.ejs');%>
+    <%- include('navbar2.ejs');%>
 
         <div class="container d-flex flex-column align-items-center col-8 test">
             <% if (journeysAvailable.length==0) {%>
@@ -44,7 +44,7 @@
                                 </strong>
                             </p>
                             <a
-                                href="/mytickets?arrival=<%= journey.arrival %>&departure=<%= journey.departure %>&price=<%= journey.price %>&date=<%= journey.date %>&departureTime=<%= journey.departureTime %> "><button
+                                href="/mytickets?arrival=<%= journey.arrival %>&departure=<%= journey.departure %>&price=<%= journey.price %>&date=<%= journey.date %>&departureTime=<%= journey.departureTime %>&id=<%= journey._id %>"><button
                                     class="btn btn-danger">OK</button></a>
                         </div>
                         <% }) %>
