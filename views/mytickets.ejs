@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+    <!-- main css -->
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <title>Ticketac - My Tickets</title>
+</head>
+
+<body>
+
+    <%- include('navbar'); %>
+
+        <div class="container justify-content-center align-items-center col-8">
+            <div class="row title-home mt-5">
+                <h1>My Tickets :</h1>
+            </div>
+
+            <% if(mytickets.length < 1){%>
+                <h5>YOU DON'T HAVE ANY TICKETS YOU STUPID FUCK</h5>
+
+                <%} else {%>
+                    <div class="row">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">N°</th>
+                                    <th scope="col">Journey</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Departure Time</th>
+                                    <th scope="col">Price</th>
+                                </tr>
+                            </thead>
+                            <tfoot>
+                                <th scope="col">Total</th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col"></th>
+                                <th scope="col">Total Price</th>
+                            </tfoot>
+                            <% for (let i=0; i<mytickets.length;i++) { %>
+                                <tr>
+                                    <th scope="row">
+                                        <%=i+1%>
+                                    </th>
+                                    <th scope="row">
+                                        <%= mytickets[i].departure%> / <%= mytickets[i].arrival%>
+                                    </th>
+                                    <th scope="row">
+                                        <%= mytickets[i].date %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= mytickets[i].departureTime %>
+                                    </th>
+                                    <th scope="row">
+                                        <%= mytickets[i].price %>
+                                    </th>
+                                </tr>
+                                <td><a href="/delete-ticket?position=<%=i%>"><button class="btn btn-outline-info btn-sm"
+                                            name="button"><i class="far fa-trash-alt"></i></button></a></td>
+                                <% } %>
+                                    <tbody>
+                                        <div class="row">
+                                            <div class="col-12 text-right">
+                                                <form action="/create-checkout-session" method="POST">
+                                                    <button class="btn btn-outline-info btn-sm btn-checkout"
+                                                        type="submit">Confirm</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <% } %>
+
+                    </div>
+
+                    <%- include('scripts'); %>
+
+</body>
+
+</html>

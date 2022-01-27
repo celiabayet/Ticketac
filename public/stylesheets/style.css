@@ -12,9 +12,8 @@ a {
 }
 
 .navbar a.active {
-  color: #d83a4c;;
+  color: #d83a4c;
 }
-
 
 .container-romain {
   height:100vh;
@@ -26,7 +25,9 @@ a {
 }
 
 .container {
-  height: 100%;
+  color:white;
+  text-shadow: 1px 1px 1px black;
+  height: 100vh;
 }
 
 .main-row {
@@ -41,10 +42,6 @@ a {
 
 .btn-info {
   background: #d83a4c;
-}
-
-.title-home {
-  color: white;
 }
 
 #landmark {
