@@ -15,25 +15,39 @@
     <%- include('navbar.ejs');%>
 
     <div class="container d-flex flex-column align-items-center col-8 test">
-        <% if (journeysAvailable.length == 0) {%>
+        <% if (trips.length == 0) {%>
         <div class="row  title-home">
-            <h1>Oups ! No trains available...</h1>
+            <h1>You don't have any trips yet !</h1>
         </div>
         <div class="row mt-2">
             <a href="/homepage"><button class="btn btn-danger">Home</button></a>
         </div>
         <% } else {%> 
         <div class="row title-home mt-5">
-            <h1>Tickets available on <%= journeysAvailable.date %>  :</h1>
+            <h1>My last trips</h1>
         </div>
-        <% journeysAvailable.map(journey => { %> 
-        <div class="row d-flex flex-row tickets">
-            <div><%= journey.departure %>/<%= journey.arrival %>  </div>
-            <div>Train departure at <%= journey.departureTime %> </div>
-            <div><%= journey.price %> €</div>
-            <div><a href="/mytickets?arrival=<%= journey.arrival %>&departure=<%= journey.departure %>&price=<%= journey.price %>&departureTime=<%= journey.departureTime %>&id=<%=journey._id  %>  "><button class="btn btn-danger">OK</button></a></div>
-        </div>
-        <% }) %> 
+
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Journey</th>
+                <th scope="col">Departure time</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody>
+            <% trips.map(trip => { %> 
+              <tr>
+                <td><%= trip.date %> </td>
+                <td><%= trip.departure %>/<%= trip.arrival %>  </td>
+                <td><%= trip.departureTime %> </td>
+                <td><%= trip.price %> </td>
+              </tr>
+            <% }) %> 
+            </tbody>
+          </table>
+        
     </div>
     <% } %> 
 
