@@ -51,4 +51,12 @@ app.use(function (err, req, res, next) {
   res.render('error');
 });
 
+app.locals.dateFormat = function (UTCdate) {
+  var date = new Date(UTCdate);
+  var day = date.getDate();
+  var month = date.getMonth() + 1;
+  var year = date.getFullYear();
+  return day + "/" + month + "/" + year;
+};
+
 module.exports = app;

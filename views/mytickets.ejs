@@ -38,6 +38,7 @@
                                     <th scope="col">Date</th>
                                     <th scope="col">Departure Time</th>
                                     <th scope="col">Price</th>
+                                    <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tfoot>
@@ -45,43 +46,48 @@
                                 <th scope="col"></th>
                                 <th scope="col"></th>
                                 <th scope="col"></th>
-                                <th scope="col">Total Price</th>
+                                <th scope="col">
+                                    <%= totalPrice %>€
+                                </th>
+                                <th scope="col"></th>
                             </tfoot>
                             <% for (let i=0; i<mytickets.length;i++) { %>
-                                <tr>
-                                    <th scope="row">
-                                        <%=i+1%>
-                                    </th>
-                                    <th scope="row">
-                                        <%= mytickets[i].departure%> / <%= mytickets[i].arrival%>
-                                    </th>
-                                    <th scope="row">
-                                        <%= mytickets[i].date %>
-                                    </th>
-                                    <th scope="row">
-                                        <%= mytickets[i].departureTime %>
-                                    </th>
-                                    <th scope="row">
-                                        <%= mytickets[i].price %>
-                                    </th>
-                                </tr>
-                                <td><a href="/delete-ticket?position=<%=i%>"><button class="btn btn-outline-info btn-sm"
-                                            name="button"><i class="far fa-trash-alt"></i></button></a></td>
-                                <% } %>
-                                    <tbody>
-                                        <div class="row">
-                                            <div class="col-12 text-right">
-                                                <form action="/create-checkout-session" method="POST">
-                                                    <button class="btn btn-outline-info btn-sm btn-checkout"
-                                                        type="submit">Confirm</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <% } %>
-
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            <%=i+1%>
+                                        </th>
+                                        <th scope="row">
+                                            <%= mytickets[i].departure%> / <%= mytickets[i].arrival%>
+                                        </th>
+                                        <th scope="row">
+                                            <%= dateFormat(mytickets[i].date) %>
+                                        </th>
+                                        <th scope="row">
+                                            <%= mytickets[i].departureTime %>
+                                        </th>
+                                        <th scope="row">
+                                            <%= mytickets[i].price %>€
+                                        </th>
+                                        <th><a href="/delete-ticket?position=<%=i%>"><button
+                                                    class="btn btn-outline-info btn-sm" name="button"><i
+                                                        class="far fa-trash-alt"></i></button></a></th>
+                                    </tr>
+                                    <% } %>
+                                </tbody>
+                        </table>
                     </div>
+                    <div class="row">
+                        <div class="col-12 text-right">
+                            <form action="/create-checkout-session" method="POST">
+                                <button class="btn btn-danger" type="submit">Confirm</button>
+                            </form>
+                        </div>
+                    </div>
+        </div>
+        <% } %>
 
-                    <%- include('scripts'); %>
+            <%- include('scripts'); %>
 
 </body>
 

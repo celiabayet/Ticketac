@@ -48,9 +48,30 @@ a {
 }
 
 .tickets {
-  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items:center;
+  height:15%;
+  min-width:100%;
+  background-color: #FFFFFF;
+  border-top: 1px solid #DADADA;
+  border-right: 1px solid #DADADA;
+  border-left: 1px solid #DADADA;
+  border-radius:15px;
+  padding:15px;
+  margin:20px;
 }
 
-.test {
-  background-color: tomato;
+p {
+  padding-top:10px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+tfoot {
+  background:#f3c7cc;
+}
+
+thead, tbody {
+  background:white;
 }
