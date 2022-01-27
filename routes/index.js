@@ -4,34 +4,25 @@ var mongoose = require('mongoose');
 
 var journeyModel = require('../models/journeys');
 
-var city = ["Paris", "Marseille", "Nantes", "Lyon", "Rennes", "Melun", "Bordeaux", "Lille", "Toulouse", "Reims", "Strasbourg", "Caen"]
-var date = ["2022-02-01", "2022-02-02", "2022-02-03", "2022-02-04", "2022-02-05", "2022-02-06", "2022-02-07", "2022-02-08", "2022-02-09", "2022-02-10", "2022-02-11", "2022-02-12", "2022-02-13", "2022-02-14", "2022-02-15", "2022-02-16", "2022-02-17", "2022-02-18", "2022-02-19", "2022-02-20", "2022-02-21", "2022-02-22", "2022-02-23", "2022-02-24", "2022-02-25", "2022-02-26", "2022-02-27", "2022-02-28"]
-
 /* GET home page. */
 router.get('/', async function (req, res, next) {
   res.render('index');
 });
 
-router.get('/save', async function (req, res, next) {
-  // How many journeys we want
-  var count = 1000
-  // Save  ---------------------------------------------------
-  for (var i = 0; i < count; i++) {
-    departureCity = city[Math.floor(Math.random() * Math.floor(city.length))]
-    arrivalCity = city[Math.floor(Math.random() * Math.floor(city.length))]
-    if (departureCity != arrivalCity) {
-      var newUser = new journeyModel({
-        departure: departureCity,
-        arrival: arrivalCity,
-        date: date[Math.floor(Math.random() * Math.floor(date.length))],
-        departureTime: Math.floor(Math.random() * Math.floor(23)) + ":00",
-        price: Math.floor(Math.random() * Math.floor(125)) + 25,
-      });
-      await newUser.save();
-    }
-  }
-  res.render('index');
+router.get('/homepage', function (req, res, next) {
+  res.render('homepage', { title: 'Express' });
 });
+
+router.post('/tickets_available', async function (req, res, next) {
+  var departure = req.body.departure;
+  var arrival = req.body.arrival;
+  console.log(req.body.date);
+  var date = new Date(req.body.date).toUTCString();
+
+  var journeysAvailable = await journeyModel.find({ departure: departure, arrival: arrival, date: date });
+
+  res.render('tickets_available', { journeysAvailable })
+})
 
 router.get('/homepage', function (req, res, next) {
   res.render('homepage');
