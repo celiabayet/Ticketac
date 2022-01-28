@@ -7,15 +7,18 @@ var userModel = require('../models/users');
 
 // Tickets Available
 router.post('/tickets_available', async function (req, res, next) {
-  req.session.user = req.session.user;
-  var departure = req.body.departure;
-  var arrival = req.body.arrival;
-  var date = new Date(req.body.date).toUTCString();
+    req.session.user = req.session.user;
 
-  var journeysAvailable = await journeyModel.find({ departure: departure, arrival: arrival, date: date });
-
-  res.render('tickets/tickets_available', { journeysAvailable })
-});
+    var departure = req.body.departure; 
+    departure = departure[0].toUpperCase()+departure.splice(1).toLowerCase();
+    var arrival = req.body.arrival;
+    arrival = arrival[0].toUpperCase()+arrival.splice(1).toLowerCase();
+    var date = new Date(req.body.date).toUTCString();
+  
+    var journeysAvailable = await journeyModel.find({ departure: departure, arrival: arrival, date: date });
+  
+    res.render('tickets/tickets_available', { journeysAvailable })
+  });
 
 // My tickets
 router.get('/mytickets', function (req, res, next) {

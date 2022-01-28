@@ -8,7 +8,9 @@ var journeyModel = require('../models/journeys');
 router.get('/', async function (req, res, next) {
   let user = null;
   let email = null;
-  res.render('home/index', { user, email });
+  let alreadyExists = false;
+  let fill = true;
+  res.render('home/index', { user, email, alreadyExists, fill });
 });
 
 router.get('/homepage', function (req, res, next) {
@@ -17,4 +19,3 @@ router.get('/homepage', function (req, res, next) {
 });
 
 module.exports = router;
-
