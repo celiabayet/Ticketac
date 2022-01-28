@@ -10,41 +10,41 @@ router.get('/', function (req, res, next) {
 
 // sign-up
 router.post('/sign-up', async function (req, res, next) {
-  if (!req.body.last_name && !req.body.first_name && !req.body.email && !req.body.password){
+  if (req.body.last_name != "" && req.body.first_name != "" && req.body.email != "" && req.body.password != "") {
     var searchUser = await userModel.findOne({
       email: req.body.email
     })
-  
-    if (!searchUser) {
+
+    if (searchUser == null) {
       var newUser = new userModel({
         last_name: req.body.last_name,
         first_name: req.body.first_name,
         email: req.body.email,
         password: req.body.password
       })
-  
+
       var newUserSave = await newUser.save();
       req.session.user = {
         email: newUserSave.email,
         id: newUserSave._id,
       }
-     
+
       res.redirect('/homepage');
     } else {
       let alreadyExists = true;
       let user = null;
       let email = null;
       let fill = true;
-      res.render('home/index', { user, email, alreadyExists, fill});
+      res.render('home/index', { user, email, alreadyExists, fill });
     }
   } else {
     let fill = false;
     let alreadyExists = false;
     let user = null;
     let email = null;
-    res.render('home/index', { user, email, alreadyExists, fill});
+    res.render('home/index', { user, email, alreadyExists, fill });
   }
-  
+
 });
 
 // sign-in
