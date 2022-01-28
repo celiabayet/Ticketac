@@ -6,7 +6,10 @@ var journeyModel = require('../models/journeys');
 
 /* GET home page. */
 router.get('/', async function (req, res, next) {
-  res.render('home/index');
+  let user = null;
+  let email = null;
+  let searchUser = null;
+  res.render('home/index', { user, email, searchUser });
 });
 
 router.get('/homepage', function (req, res, next) {

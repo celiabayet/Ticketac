@@ -28,29 +28,32 @@ router.post('/sign-up', async function (req, res, next) {
       id: newUserSave._id,
     }
 
-    res.redirect('../home/homepage')
+    res.redirect('/homepage')
   } else {
-    res.redirect('../home/')
+    res.redirect('/')
   }
 });
 
 // sign-in
 router.post('/sign-in', async function (req, res, next) {
-  var searchUser = await userModel.findOne({
-    email: req.body.email,
-    password: req.body.password
-  })
-
-  if (searchUser != null) {
-    req.session.user = {
-      email: searchUser.email,
-      id: searchUser._id
-    }
-    res.redirect('/homepage')
+  var emailUser = await userModel.findOne({ email: req.body.email })
+  if (emailUser == null) {
+    res.render('home/index', { email: "incorrect", user: emailUser })
   } else {
-    res.render('home/index')
+    var searchUser = await userModel.findOne({
+      email: req.body.email,
+      password: req.body.password
+    })
+    if (searchUser == null) {
+      res.render('home/index', { email: emailUser.email, user: "incorrect" })
+    } else {
+      req.session.user = {
+        email: searchUser.email,
+        id: searchUser._id
+      }
+      res.redirect('/homepage')
+    }
   }
-  console.log(req.session.user)
 });
 
 // Log out
