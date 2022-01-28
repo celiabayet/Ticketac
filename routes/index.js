@@ -8,8 +8,7 @@ var journeyModel = require('../models/journeys');
 router.get('/', async function (req, res, next) {
   let user = null;
   let email = null;
-  let searchUser = null;
-  res.render('home/index', { user, email, searchUser });
+  res.render('home/index', { user, email });
 });
 
 router.get('/homepage', function (req, res, next) {

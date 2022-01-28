@@ -66,6 +66,11 @@
               <button type="submit" class="btn btn-info">Confirm</button>
             </form>
           </div>
+          <% if (alreadyExist==true) {%>
+            <p> You already have an account. Please sign-in. </p>
+            <% }; if (filled=false) { %>
+              <p> Please fill up the form entirely. </p>
+              <% } %>
         </div>
 
       </div>
