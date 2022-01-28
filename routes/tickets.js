@@ -8,10 +8,11 @@ var userModel = require('../models/users');
 // Tickets Available
 router.post('/tickets_available', async function (req, res, next) {
     req.session.user = req.session.user;
-    console.log(req.session.user);
-    var departure = req.body.departure;
+
+    var departure = req.body.departure; 
+    departure = departure[0].toUpperCase()+departure.splice(1).toLowerCase();
     var arrival = req.body.arrival;
-    console.log(req.body.date);
+    arrival = arrival[0].toUpperCase()+arrival.splice(1).toLowerCase();
     var date = new Date(req.body.date).toUTCString();
   
     var journeysAvailable = await journeyModel.find({ departure: departure, arrival: arrival, date: date });
