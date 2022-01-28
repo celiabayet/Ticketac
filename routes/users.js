@@ -27,10 +27,9 @@ router.post('/sign-up', async function (req, res, next) {
       email: newUserSave.email,
       id: newUserSave._id,
     }
-
-    res.redirect('../home/homepage')
+    res.redirect('/homepage');
   } else {
-    res.redirect('../home/')
+    res.redirect('/');
   }
 });
 
@@ -48,7 +47,7 @@ router.post('/sign-in', async function (req, res, next) {
     }
     res.redirect('/homepage')
   } else {
-    res.render('home/index')
+    res.render('home/index', {user : req.session.user});
   }
   console.log(req.session.user)
 });
