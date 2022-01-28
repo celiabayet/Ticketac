@@ -16,7 +16,7 @@
 
 <body>
 
-  <%- include('navbar2.ejs');%>
+  <%- include('../partials/navbar2.ejs');%>
 
     <div class="container d-flex flex-column align-items-center col-8 test">
       <% if (trips.length==0) {%>
@@ -24,7 +24,7 @@
           <h1>You don't have any trips yet !</h1>
         </div>
         <div class="row mt-2">
-          <a href="/homepage"><button class="btn btn-danger">Home</button></a>
+          <a href="home/homepage"><button class="btn btn-danger">Home</button></a>
         </div>
         <% } else {%>
           <div class="row title-home mt-5">
@@ -63,7 +63,7 @@
     </div>
     <% } %>
 
-      <%- include('scripts.ejs'); %>
+      <%- include('../partials/scripts.ejs'); %>
 </body>
 
 </html>

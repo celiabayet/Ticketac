@@ -16,7 +16,7 @@
 
 <body>
 
-    <%- include('navbar2.ejs');%>
+    <%- include('../partials/navbar2.ejs');%>
 
         <div class="container d-flex flex-column align-items-center col-8 test">
             <% if (journeysAvailable.length==0) {%>
@@ -28,7 +28,7 @@
                 </div>
                 <% } else {%>
                     <div class="row title-home mt-5">
-                        <h1>Tickets available on <%= dateFormat(date) %> :</h1>
+                        <h1>Tickets available on <%= dateFormat(journeysAvailable[0].date) %> :</h1>
                     </div>
                     <% journeysAvailable.map(journey=> { %>
                         <div class="tickets">
@@ -44,14 +44,14 @@
                                 </strong>
                             </p>
                             <a
-                                href="/mytickets?arrival=<%= journey.arrival %>&departure=<%= journey.departure %>&price=<%= journey.price %>&date=<%= journey.date %>&departureTime=<%= journey.departureTime %>&id=<%= journey._id %>"><button
+                                href="/tickets/mytickets?arrival=<%= journey.arrival %>&departure=<%= journey.departure %>&price=<%= journey.price %>&date=<%= journey.date %>&departureTime=<%= journey.departureTime %>&id=<%= journey._id %>"><button
                                     class="btn btn-danger">OK</button></a>
                         </div>
                         <% }) %>
         </div>
         <% } %>
 
-            <%- include('scripts.ejs'); %>
+            <%- include('../partials/scripts.ejs'); %>
 </body>
 
 </html>

@@ -17,14 +17,14 @@
 
 <body>
 
-    <%- include('navbar2.ejs');%>
+    <%- include('../partials/navbar2.ejs');%>
 
         <div class="container justify-content-center align-items-center col-8">
             <div class="row title-home mt-5">
                 <h1>One-way ticket :</h1>
             </div>
             <div class="row">
-                <form action="/tickets_available" class="d-flex" method="POST">
+                <form action="/tickets/tickets_available" class="d-flex" method="POST">
                     <input type="search" class="form-control m-2" name="departure" id="departure"
                         placeholder="From: Paris, Marseille...">
                     <input type="search" class="form-control m-2" name="arrival" id="arrival"
@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        <%- include('scripts.ejs'); %>
+        <%- include('../partials/scripts.ejs'); %>
 </body>
 
 </html>

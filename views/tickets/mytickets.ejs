@@ -18,7 +18,7 @@
 
 <body>
 
-    <%- include('navbar2'); %>
+    <%- include('../partials/navbar2'); %>
 
         <div class="container justify-content-center align-items-center col-8">
             <div class="row title-home mt-5">
@@ -41,16 +41,7 @@
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
-                            <tfoot>
-                                <th scope="col">Total</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                                <th scope="col">
-                                    <%= totalPrice %>€
-                                </th>
-                                <th scope="col"></th>
-                            </tfoot>
+                            <% let totalPrice = 0 %> 
                             <% for (let i=0; i<mytickets.length;i++) { %>
                                 <tbody>
                                     <tr>
@@ -68,18 +59,29 @@
                                         </th>
                                         <th scope="row">
                                             <%= mytickets[i].price %>€
+                                            <% totalPrice = Number(totalPrice+ mytickets[i].price)%> 
                                         </th>
-                                        <th><a href="/delete-ticket?position=<%=i%>"><button
+                                        <th><a href="/tickets/delete-ticket?position=<%=i%>"><button
                                                     class="btn btn-outline-info btn-sm" name="button"><i
                                                         class="far fa-trash-alt"></i></button></a></th>
                                     </tr>
                                     <% } %>
                                 </tbody>
+                                <tfoot>
+                                    <th scope="col">Total</th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col"></th>
+                                    <th scope="col">
+                                        <%= totalPrice %>€
+                                    </th>
+                                    <th scope="col"></th>
+                                </tfoot>
                         </table>
                     </div>
                     <div class="row">
                         <div class="col-12 text-right">
-                            <form action="/create-checkout-session" method="POST">
+                            <form action="/tickets/create-checkout-session" method="POST">
                                 <button class="btn btn-danger" type="submit">Confirm</button>
                             </form>
                         </div>
@@ -87,7 +89,7 @@
         </div>
         <% } %>
 
-            <%- include('scripts'); %>
+            <%- include('../partials/scripts'); %>
 
 </body>
 
